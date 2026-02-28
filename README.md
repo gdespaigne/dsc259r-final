@@ -1,16 +1,20 @@
 # Predicting Early Match Success in League of Legends
 <b>Project by:</b> Gabrielle Despaigne
+<p>
 <b>DSC 259R Final Project
 
 ### Introduction
 
-### Quick Stats About the Dataset
-The League of Legends dataset contains detailed statistics from professional matches. Each game is represented by multiple rows, including player-level statistics and team-level summary rows. The dataset includes 165 columns covering match metadata (league, patch, split, date), performance metrics (kills, gold, objectives), and match outcome (result).
+### Data Cleaning and Exploratory Data Analysis
 
-The raw dataset contains 12 rows per game:
+### Assessment of Missingness
 
-10 player-level rows (5 per team)
+### Hypothesis Testing
 
-2 team-level summary rows
+### Framing a Prediction Problem
 
-At this stage, no filtering has been performed. This initial inspection helps identify how the dataset is structured before any cleaning or transformation.
+### Baseline Model
+
+### Final Model
+
+### Fairness Analysis
