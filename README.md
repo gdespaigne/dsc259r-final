@@ -14,17 +14,17 @@ The dataset contains team-level observations from professional matches played du
 
 The columns most relevant to this project include:
 
-result — Binary indicator of match outcome (1 = win, 0 = loss). This is the response variable for both hypothesis testing and predictive modeling.
+<b>- result</b> — Binary indicator of match outcome (1 = win, 0 = loss). This is the response variable for both hypothesis testing and predictive modeling.
 
-early_objective_control — Engineered binary feature indicating whether a team secured at least one early neutral objective (first dragon, first herald, or first tower).
+<b>- early_objective_control</b> — Engineered binary feature indicating whether a team secured at least one early neutral objective (first dragon, first herald, or first tower).
 
-firstblood — Binary indicator of whether a team secured the first kill of the match.
+<b>- firstblood</b> — Binary indicator of whether a team secured the first kill of the match.
 
-golddiffat10 — Gold difference between the team and their opponent at 10 minutes. This captures the magnitude of early economic advantage.
+<b>- golddiffat10</b> — Gold difference between the team and their opponent at 10 minutes. This captures the magnitude of early economic advantage.
 
-killsat10 — Number of kills secured by the team at 10 minutes.
+<b>- killsat10</b> — Number of kills secured by the team at 10 minutes.
 
-side — Categorical variable indicating whether the team played on the blue or red side.
+<b>- side</b> — Categorical variable indicating whether the team played on the blue or red side.
 
 By combining statistical inference and predictive modeling, this project evaluates whether early-game events and advantages meaningfully shape match outcomes and whether continuous measures of early advantage improve predictive performance beyond simple binary indicators.
 
