@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="assets/css/style.css">
-
 # Predicting Early Match Success in League of Legends
 **Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
