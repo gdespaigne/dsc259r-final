@@ -1,6 +1,6 @@
 # Predicting Early Match Success in League of Legends
 **Project by:** Gabrielle Despaigne
-DSC 259R Final Project
+**DSC 259R** Final Project
 
 ## Introduction
 
@@ -75,7 +75,7 @@ The following table shows the first few rows of the cleaned dataset used in the 
 <div align="center" style="max-width:700px; margin:auto;">
 <iframe
   src="assets/win_distribution.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
@@ -85,13 +85,14 @@ This visualization shows the distribution of match outcomes across the dataset. 
 ---
 
 ## Bivariate Analysis
+<div align="center" style="max-width:700px; margin:auto;">
 <iframe
   src="assets/objective_winrate.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
-
+</div>
 
 This plot shows the relationship between **early objective control** and match outcomes. Teams that secure early objectives display a noticeably higher win rate compared to teams that do not. This suggests that early macro advantages may play a meaningful role in determining match outcomes.
 
@@ -165,14 +166,14 @@ These results reinforce the conclusion that the missingness is tied to the **gam
 ---
 
 ### Visualization of Missingness
-
+<div align="center" style="max-width:700px; margin:auto;">
 <iframe
   src="assets/missingness_permutation.html"
-  width="1000"
+  width="800"
   height="600"
   frameborder="0"
 ></iframe>
-
+</div>
 The permutation test examines whether the missingness of void_grubs depends on team side (Blue vs Red). Since the observed difference falls well within the permutation distribution, there is no evidence that missingness is related to team side. This supports the conclusion that missing values are instead caused by structural changes in the game, specifically the patch that introduced void grubs.
 
 <h2>Hypothesis Testing</h2>
