@@ -72,13 +72,14 @@ The following table shows the first few rows of the cleaned dataset used in the 
 ---
 
 ## Univariate Analysis
+<div align="center" style="max-width:700px; margin:auto;">
 <iframe
   src="assets/win_distribution.html"
   width="1000"
   height="600"
   frameborder="0"
 ></iframe>
-
+</div>
 This visualization shows the distribution of match outcomes across the dataset. Since each match contributes one win and one loss at the team level, the distribution is balanced between the two classes. This balance is beneficial for predictive modeling because it prevents classification bias toward one outcome.
 
 ---
