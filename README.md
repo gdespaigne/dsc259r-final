@@ -75,7 +75,7 @@ The following table shows the first few rows of the cleaned dataset used in the 
 
 <iframe
   src="plots/win_distribution.png"
-  width="auto"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -88,7 +88,7 @@ This visualization shows the distribution of match outcomes across the dataset. 
 
 <iframe
   src="plots/earlyadvcompar.png"
-  width="auto"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
@@ -167,7 +167,7 @@ These results reinforce the conclusion that the missingness is tied to the **gam
 
 <iframe
   src="assets/missingness_permutation.html"
-  width="auto"
+  width="1000"
   height="600"
   frameborder="0"
 ></iframe>
