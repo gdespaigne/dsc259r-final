@@ -1,5 +1,5 @@
 # Predicting Early Match Success in League of Legends
-**Project by:** Gabrielle Despaigne
+**Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
 
 ## Introduction
@@ -72,7 +72,7 @@ The following table shows the first few rows of the cleaned dataset used in the 
 ---
 
 ## Univariate Analysis
-<div align="center" style="max-width:700px; margin:auto;">
+<div align="center" style="max-width:800px; margin:auto;">
 <iframe
   src="assets/win_distribution.html"
   width="800"
@@ -85,7 +85,7 @@ This visualization shows the distribution of match outcomes across the dataset. 
 ---
 
 ## Bivariate Analysis
-<div align="center" style="max-width:700px; margin:auto;">
+<div align="center" style="max-width:800px; margin:auto;">
 <iframe
   src="assets/objective_winrate.html"
   width="800"
@@ -166,10 +166,10 @@ These results reinforce the conclusion that the missingness is tied to the **gam
 ---
 
 ### Visualization of Missingness
-<div align="center" style="max-width:700px; margin:auto;">
+<div align="center" style="max-width:900px; margin:auto;">
 <iframe
   src="assets/missingness_permutation.html"
-  width="800"
+  width="900"
   height="600"
   frameborder="0"
 ></iframe>
