@@ -75,8 +75,8 @@ The following table shows the first few rows of the cleaned dataset used in the 
 
 <iframe
   src="plots/win_distribution.png"
-  width="600"
-  height="400"
+  width="800"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -88,8 +88,8 @@ This visualization shows the distribution of match outcomes across the dataset. 
 
 <iframe
   src="plots/earlyadvcompar.png"
-  width="600"
-  height="400"
+  width="800"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -129,7 +129,46 @@ The following grouped table summarizes win rates based on early objective contro
 This grouped summary reinforces the trend observed in the visualization. Teams that secure early objectives win a substantially larger proportion of matches compared to teams that do not, suggesting that early objective control may be an important indicator of overall match success.
 
 
-<h2>Assessment of Missingness</h2>
+## Missingness Analysis
+
+### Potential NMAR Column
+
+One column in the dataset that exhibits non-trivial missingness is **`void_grubs`**.  
+I believe the missingness in this column is **NMAR (Not Missing At Random)**.
+
+The missing values occur because **void grubs were introduced in a later League of Legends patch**, and therefore do not appear in matches played earlier in the 2022 season. This means that the missingness is not random, but instead tied directly to the **data generating process**, specifically the patch version of the game at the time each match was played.
+
+Because the presence of void grubs depends on whether the game was played after the patch that introduced them, the missingness is determined by an external factor (game version). If additional data such as **patch version or match date** were explicitly used to model this missingness, the column could potentially be treated as **Missing At Random (MAR)** instead of NMAR, since the missingness would then be explainable by an observed variable.
+
+For the purposes of this project, the `void_grubs` column was excluded from modeling because its missingness reflects a structural change in the game rather than meaningful gameplay information during the 2022 season.
+
+---
+
+### Missingness Dependency Testing
+
+To further investigate missingness patterns, permutation tests were conducted to determine whether the missingness of `void_grubs` depends on other variables in the dataset.
+
+Two permutation tests were performed:
+
+- One test examined whether missingness in `void_grubs` depends on the **side** variable (blue side vs red side).
+- Another test examined whether missingness depends on **patch version**.
+
+The results showed that missingness **does depend on patch version**, which supports the earlier reasoning that missing values occur because the game mechanic did not exist in earlier patches. However, missingness **does not depend on side**, indicating that the presence or absence of void grubs is unrelated to team position in the match.
+
+These results reinforce the conclusion that the missingness is tied to the **game version rather than gameplay characteristics**.
+
+---
+
+### Visualization of Missingness
+
+<iframe
+  src="assets/missingness_distribution.html"
+  width="850"
+  height="500"
+  frameborder="0"
+></iframe>
+
+The permutation test examines whether the missingness of void_grubs depends on team side (Blue vs Red). Since the observed difference falls well within the permutation distribution, there is no evidence that missingness is related to team side. This supports the conclusion that missing values are instead caused by structural changes in the game, specifically the patch that introduced void grubs.
 
 <h2>Hypothesis Testing</h2>
 
