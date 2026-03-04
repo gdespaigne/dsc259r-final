@@ -64,7 +64,7 @@ The following table shows the first few rows of the cleaned dataset used in the 
 ## Univariate Analysis
 
 <iframe
-  src="assets/win_distribution.html"
+  src="plots/win_distribution.png"
   width="800"
   height="500"
   frameborder="0"
@@ -77,7 +77,7 @@ This visualization shows the distribution of match outcomes across the dataset. 
 ## Bivariate Analysis
 
 <iframe
-  src="assets/earlyadvcompar.html"
+  src="plots/earlyadvcompar.png"
   width="800"
   height="500"
   frameborder="0"
