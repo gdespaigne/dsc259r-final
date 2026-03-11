@@ -1,4 +1,3 @@
-# Predicting Early Match Success in League of Legends
 **Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
 
@@ -52,8 +51,8 @@ After cleaning and feature engineering, the dataset contains **24,830 rows**, wh
 The following table shows the first few rows of the cleaned dataset used in the analysis.
 
 
-|   result | side   |   firstblood |   firstdragon |   firstherald |   firsttower |   void_grubs |   early_objective_control |   golddiffat10 |   killsat10 |
-|---------:|:-------|-------------:|--------------:|--------------:|-------------:|-------------:|--------------------------:|---------------:|------------:|
+|   result | side   |   firstblood |   firstdragon |   firstherald |   firsttower |   void_grubs |   early_obj_cntrl |   golddiffat10 |   killsat10 |
+|---------:|:-------|-------------:|--------------:|--------------:|-------------:|-------------:|------------------:|---------------:|------------:|
 |        0 | Blue   |            1 |             0 |             1 |            1 |          nan |                         1 |           1523 |           3 |
 |        1 | Red    |            0 |             1 |             0 |            0 |          nan |                         1 |          -1523 |           0 |
 |        0 | Blue   |            0 |             0 |             1 |            0 |          nan |                         1 |          -1619 |           1 |
@@ -169,15 +168,184 @@ These results reinforce the conclusion that the missingness is tied to the **gam
 
 The permutation test examines whether the missingness of void_grubs depends on team side (Blue vs Red). Since the observed difference falls well within the permutation distribution, there is no evidence that missingness is related to team side. This supports the conclusion that missing values are instead caused by structural changes in the game, specifically the patch that introduced void grubs.
 
-<h2>Hypothesis Testing</h2>
+---
 
-<h2>Framing a Prediction Problem</h2>
+## Hypothesis Testing
 
-<h2>Baseline Model</h2>
+The central question of this project is whether early-game advantages are associated with a higher probability of winning a professional League of Legends match. To evaluate this, I performed permutation tests on two early-game indicators: **early objective control** and **first blood**. In both cases, the goal was to determine whether teams that secured these early advantages tended to win more frequently than teams that did not.
 
-<h2>Final Model</h2>
+### Hypothesis Test 1: Early Objective Control
 
-## Fairness Analysis (Final Model)
+- **Null Hypothesis (H₀):** Teams that secure early objective control and teams that do not have the same probability of winning.
+- **Alternative Hypothesis (H₁):** Teams that secure early objective control have a higher probability of winning.
+
+The **test statistic** used was the **difference in win rate** between the two groups. This statistic is appropriate because the research question directly concerns whether one group wins more frequently than the other. A **significance level of 0.05** was used.
+
+The observed difference in win rate was approximately **0.229**, meaning teams that secured early objective control won about **22.9 percentage points more often** than teams that did not. The permutation test produced a **p-value close to 0**, indicating that such a large difference would be extremely unlikely under the null hypothesis. As a result, the null hypothesis was rejected, suggesting that early objective control is strongly associated with match outcomes.
+
+### Hypothesis Test 2: First Blood
+
+A second permutation test was conducted to evaluate whether securing **first blood** is associated with a higher probability of winning.
+
+- **Null Hypothesis (H₀):** Teams that secure first blood and teams that do not have the same probability of winning.
+- **Alternative Hypothesis (H₁):** Teams that secure first blood have a higher probability of winning.
+
+The same **test statistic**—difference in win rate between groups—was used, along with the same **significance level of 0.05**.
+
+The observed difference in win rate was approximately **0.220**, meaning teams that secured first blood won about **22.0 percentage points more often** than teams that did not. The permutation test again produced a **p-value close to 0**, providing strong evidence against the null hypothesis.
+
+### Interpretation
+
+Both hypothesis tests suggest that early-game advantages are meaningfully associated with match outcomes. Teams that secure early objective control or first blood tend to win more frequently than teams that do not. While these tests do not demonstrate causation, they suggest that early-game events contain meaningful information about eventual match outcomes. Because of this, these variables were also used as inputs in the predictive models developed in the following section.
+
+---
+
+## Prediction Problem
+
+The predictive goal of this project is to determine whether **early-game advantages can predict match outcomes** in professional League of Legends games. Specifically, I built a model that predicts whether a team will **win or lose a match** based on information available in the early stages of the game.
+
+### Prediction Type
+
+This is a **binary classification problem** because the response variable has two possible outcomes: a team either **wins (1)** or **loses (0)** the match.
+
+### Response Variable
+
+The response variable for the model is:
+
+- **`result`** — a binary variable indicating whether a team won the match (1) or lost (0).
+
+This variable was chosen because it directly represents the outcome that teams ultimately care about: winning the game. Predicting match outcomes based on early-game signals helps evaluate whether early advantages meaningfully influence eventual results.
+
+### Features Used for Prediction
+
+The model uses several features that represent early-game conditions, including:
+
+- `early_objective_control`
+- `firstblood`
+- `golddiffat10`
+- `killsat10`
+
+These features were selected because they capture **early momentum within a match**, such as objective control, early kills, and economic advantage.
+
+### Time of Prediction
+
+An important constraint in building the model is ensuring that only information available **early in the match** is used for prediction. This means the model only uses features that would realistically be known at the time a prediction is made. For example, metrics like **gold difference at 10 minutes or early objective control** occur early enough in the game to plausibly inform predictions about the final outcome. Later-game statistics such as total damage or final gold totals were intentionally excluded because they would not be available at prediction time.
+
+### Evaluation Metric
+
+To evaluate model performance, I used two metrics:
+
+- **Accuracy**, which measures the proportion of correctly predicted match outcomes.
+- **ROC-AUC**, which evaluates how well the model distinguishes between winning and losing teams across all possible classification thresholds.
+
+ROC-AUC was included because accuracy alone can be misleading for classification problems that depend on a decision threshold. ROC-AUC instead evaluates the model’s ability to rank winning teams above losing teams, providing a more complete measure of predictive performance.
+
+## Baseline Model
+
+To establish a benchmark for predictive performance, I first trained a **baseline logistic regression classifier**. Logistic regression is a common starting point for binary classification tasks because it produces interpretable coefficients and performs well when relationships between predictors and the response variable are approximately linear.
+
+### Model Features
+
+The baseline model was trained using two early-game indicators:
+
+- **`early_objective_control`** – whether the team secured an early neutral objective (dragon or herald)
+- **`firstblood`** – whether the team secured the first kill of the match
+
+Both variables are **binary indicators** that capture early momentum in the game.
+
+Feature types:
+
+| Feature | Type | Description |
+|------|------|------|
+| early_objective_control | Ordinal / binary | Indicates whether a team secured early objective control |
+| firstblood | Ordinal / binary | Indicates whether a team secured the first kill |
+
+Because both variables were already encoded as **0/1 binary indicators**, no additional categorical encoding was required. The features were therefore passed directly into the logistic regression model.
+
+### Model Performance
+
+The baseline model achieved the following performance on the held-out test dataset:
+
+| Metric | Score |
+|------|------|
+| Accuracy | 0.619 |
+| ROC-AUC | 0.644 |
+
+Accuracy measures the proportion of matches where the model correctly predicted the winning team. ROC-AUC evaluates how well the model ranks winning teams above losing teams across all possible classification thresholds.
+
+### Interpretation
+
+The baseline model performs **better than random guessing**, indicating that early-game events contain some predictive information about match outcomes. However, the model’s accuracy and ROC-AUC values remain relatively modest, suggesting that early objective control and first blood alone do not fully explain match results. League of Legends matches involve many interacting factors, including team composition, gold advantages, and macro strategy.
+
+Because of this, the baseline model serves primarily as a **reference point**. In the next section, additional early-game features and feature transformations are introduced to determine whether predictive performance can be improved.
+
+---
+
+## Final Model
+
+To improve upon the baseline classifier, I expanded the feature set to include additional early-game indicators that capture **economic and combat advantages** within the first 10 minutes of a match.
+
+### Feature Engineering
+
+Two additional features were introduced:
+
+- **`golddiffat10`** – the difference in total team gold at the 10-minute mark  
+- **`killsat10`** – the number of kills secured by the team at 10 minutes
+
+Both features represent **quantitative measures of early-game advantage**. In professional League of Legends matches, gold accumulation and early kills are key signals of momentum. Teams with a gold lead typically gain stronger items and map pressure, which can translate into control over later objectives and team fights. Similarly, early kills often reflect successful lane pressure or coordinated early-game strategies.
+
+From the perspective of the **data generating process**, these variables capture early structural advantages that naturally emerge from gameplay. Because they quantify the magnitude of early advantage rather than simply indicating whether an event occurred, they provide additional information beyond the binary indicators used in the baseline model.
+
+The final feature set therefore included:
+
+| Feature | Type | Description |
+|------|------|------|
+| early_objective_control | Ordinal / binary | Indicates whether a team secured early neutral objectives |
+| firstblood | Ordinal / binary | Indicates whether a team secured the first kill |
+| golddiffat10 | Quantitative | Team gold difference at the 10-minute mark |
+| killsat10 | Quantitative | Number of kills secured by the team at 10 minutes |
+
+### Model and Hyperparameter Selection
+
+The final model uses **logistic regression**, consistent with the baseline model, in order to maintain interpretability while evaluating the impact of additional features.
+
+To improve model performance and ensure appropriate scaling of quantitative features, the following transformations were included within a single sklearn Pipeline:
+
+- **Median imputation** to handle missing values in early-game statistics
+- **Standard scaling** for quantitative variables (`golddiffat10`, `killsat10`)
+- Logistic regression as the final classifier
+
+Hyperparameters for the logistic regression model were selected using **GridSearchCV**, which performs cross-validation to identify the combination of parameters that generalizes best to unseen data. The grid search evaluated several values of the regularization strength parameter **C**, which controls the tradeoff between model flexibility and overfitting.
+
+### Model Performance
+
+The final model produced the following results on the held-out test dataset:
+
+| Metric | Baseline Model | Final Model |
+|------|------|------|
+| Accuracy | 0.619 | 0.675 |
+| ROC-AUC | 0.644 | 0.745 |
+
+The confusion matrix shows how the final classifier performs when predicting match outcomes. The diagonal values represent correct predictions, while the off-diagonal values represent misclassifications. Most predictions fall along the diagonal, indicating that the model correctly identifies a majority of winning and losing teams, though some misclassification remains due to the complexity of match outcomes.
+
+<iframe
+  src="assets/confusion_matrix_final_model.html"
+  width="700"
+  height="550"
+  frameborder="0">
+</iframe>
+
+### Interpretation
+
+The final model improves substantially over the baseline model, particularly in terms of **ROC-AUC**, which increased from **0.644 to 0.745**. This indicates that the model is significantly better at distinguishing between winning and losing teams when additional early-game indicators are included.
+
+This improvement aligns with expectations from the gameplay mechanics of League of Legends. While early objectives and first blood provide signals of early advantage, variables such as gold difference and early kill counts capture **the scale of a team's advantage**, which more directly reflects a team's position within the match.
+
+Overall, the final model demonstrates that incorporating multiple forms of early-game information provides a stronger signal for predicting match outcomes.
+
+---
+
+## Fairness Analysis (of Final Model)
 
 ### Groups and Metric
 
@@ -226,5 +394,3 @@ The model achieves slightly higher accuracy when early objectives are secured (0
   height="600"
   frameborder="0"
 ></iframe>
-
----
