@@ -1,4 +1,6 @@
-# Predicting Early Match Success in League of Legends
+---
+title: Predicting Early Match Success in League of Legends
+---
 **Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
 
@@ -52,10 +54,8 @@ After cleaning and feature engineering, the dataset contains **24,830 rows**, wh
 
 The following table shows the first few rows of the cleaned dataset used in the analysis.
 
-<div style="overflow-x:auto; display:flex; justify-content:center;">
-
-|  result | side   |   firstblood |   firstdragon |   firstherald |   firsttower |   void_grubs |   early_obj_cntrl |   golddiffat10 |   killsat10 |
-|--------:|:-------|-------------:|--------------:|--------------:|-------------:|-------------:|------------------:|---------------:|------------:|
+|  result | side   |   fb |   fd |   fh |   ft |   vg |   eoc |   gd@10 |   k@10 |
+|--------:|:-------|-------:|--------:|--------:|-------:|---------:|-----------:|---------:|-------:|
 |        0 | Blue   |            1 |             0 |             1 |            1 |          nan |                         1 |           1523 |           3 |
 |        1 | Red    |            0 |             1 |             0 |            0 |          nan |                         1 |          -1523 |           0 |
 |        0 | Blue   |            0 |             0 |             1 |            0 |          nan |                         1 |          -1619 |           1 |
@@ -67,7 +67,16 @@ The following table shows the first few rows of the cleaned dataset used in the 
 |        1 | Blue   |            1 |             0 |             0 |            1 |            0 |                         1 |            nan |         nan |
 |        0 | Red    |            0 |             1 |             0 |            0 |            0 |                         1 |            nan |         nan |
 
-</div>
+**Legend**
+
+- **FB** – First Blood  
+- **FD** – First Dragon  
+- **FH** – First Herald  
+- **FT** – First Tower  
+- **VG** – Void Grubs  
+- **EOC** – Early Objective Control  
+- **GD@10** – Gold Difference at 10 minutes  
+- **K@10** – Kills at 10 minutes  
 
 ---
 
