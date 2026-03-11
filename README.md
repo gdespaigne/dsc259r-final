@@ -1,6 +1,4 @@
----
-title: Predicting Early Match Success in League of Legends
----
+# Predicting Early Match Success in League of Legends
 **Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
 
