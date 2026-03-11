@@ -1,3 +1,4 @@
+Early-Game Advantage and Match Outcomes in League of Legends
 ## A Project Exploring the Data Lifestyle Through Video Game Analytics
 **Project by:** Gabrielle Despaigne |
 **DSC 259R** Final Project
